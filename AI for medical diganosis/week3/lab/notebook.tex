@@ -1,0 +1,979 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{AI4M\_C1\_W3\_lecture\_ex\_03}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{ai4m-course-1-week-3-lecture-notebook}{%
+\section{AI4M Course 1 week 3 lecture
+notebook}\label{ai4m-course-1-week-3-lecture-notebook}}
+
+    \hypertarget{u-net-model}{%
+\subsection{U-Net model}\label{u-net-model}}
+
+In this week's assignment, you'll be using a network architecture called
+``U-Net''. The name of this network architecture comes from it's U-like
+shape when shown in a diagram like this (image from
+\href{https://en.wikipedia.org/wiki/U-Net}{U-net entry on wikipedia}):
+
+U-nets are commonly used for image segmentation, which will be your task
+in the upcoming assignment. You won't actually need to implement U-Net
+in the assignment, but we wanted to give you an opportunity to gain some
+familiarity with this architecture here before you use it in the
+assignment.
+
+As you can see from the diagram, this architecture features a series of
+down-convolutions connected by max-pooling operations, followed by a
+series of up-convolutions connected by upsampling and concatenation
+operations. Each of the down-convolutions is also connected directly to
+the concatenation operations in the upsampling portion of the network.
+For more detail on the U-Net architecture, have a look at the original
+\href{https://arxiv.org/abs/1505.04597}{U-Net paper by Ronneberger et
+al.~2015}.
+
+In this lab, you'll create a basic U-Net using Keras.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{} Import the elements you\PYZsq{}ll need to build your U\PYZhy{}Net}
+        \PY{k+kn}{import} \PY{n+nn}{keras}
+        \PY{k+kn}{from} \PY{n+nn}{keras} \PY{k}{import} \PY{n}{backend} \PY{k}{as} \PY{n}{K}
+        \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{engine} \PY{k}{import} \PY{n}{Input}\PY{p}{,} \PY{n}{Model}
+        \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{layers} \PY{k}{import} \PY{n}{Conv3D}\PY{p}{,} \PY{n}{MaxPooling3D}\PY{p}{,} \PY{n}{UpSampling3D}\PY{p}{,} \PY{n}{Activation}\PY{p}{,} \PY{n}{BatchNormalization}\PY{p}{,} \PY{n}{PReLU}\PY{p}{,} \PY{n}{Deconvolution3D}
+        \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{optimizers} \PY{k}{import} \PY{n}{Adam}
+        \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{layers}\PY{n+nn}{.}\PY{n+nn}{merge} \PY{k}{import} \PY{n}{concatenate}
+        \PY{c+c1}{\PYZsh{} Set the image shape to have the channels in the first dimension}
+        \PY{n}{K}\PY{o}{.}\PY{n}{set\PYZus{}image\PYZus{}data\PYZus{}format}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{channels\PYZus{}first}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Using TensorFlow backend.
+
+    \end{Verbatim}
+
+    \hypertarget{the-depth-of-your-u-net}{%
+\subsubsection{The ``depth'' of your
+U-Net}\label{the-depth-of-your-u-net}}
+
+The ``depth'' of your U-Net is equal to the number of down-convolutions
+you will use. In the image above, the depth is 4 because there are 4
+down-convolutions running down the left side including the very bottom
+of the U.
+
+For this exercise, you'll use a U-Net depth of 2, meaning you'll have 2
+down-convolutions in your network.
+
+    \hypertarget{input-layer-and-its-depth}{%
+\subsubsection{Input layer and its
+``depth''}\label{input-layer-and-its-depth}}
+
+In this lab and in the assignment, you will be doing 3D image
+segmentation, which is to say that, in addition to ``height'' and
+``width'', your input layer will also have a ``length''. We are
+deliberately using the word ``length'' instead of ``depth'' here to
+describe the third spatial dimension of the input so as not to confuse
+it with the depth of the network as defined above.
+
+The shape of the input layer is
+\texttt{(num\_channels,\ height,\ width,\ length)}, where
+\texttt{num\_channels} you can think of like color channels in an image,
+\texttt{height}, \texttt{width} and \texttt{length} are just the size of
+the input.
+
+For the assignment, the values will be: - num\_channels: 4 - height: 160
+- width: 160 - length: 16
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{} Define an input layer tensor of the shape you\PYZsq{}ll use in the assignment}
+        \PY{n}{input\PYZus{}layer} \PY{o}{=} \PY{n}{Input}\PY{p}{(}\PY{n}{shape}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{160}\PY{p}{,} \PY{l+m+mi}{160}\PY{p}{,} \PY{l+m+mi}{16}\PY{p}{)}\PY{p}{)}
+        \PY{n}{input\PYZus{}layer}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}2}]:} <tf.Tensor 'input\_1:0' shape=(?, 4, 160, 160, 16) dtype=float32>
+\end{Verbatim}
+            
+    Notice that the tensor shape has a `?' as the very first dimension. This
+will be the batch size. So the dimensions of the tensor are:
+(batch\_size, num\_channels, height, width, length)
+
+    \hypertarget{contracting-downward-path}{%
+\subsection{Contracting (downward)
+path}\label{contracting-downward-path}}
+
+Here you'll start by constructing the downward path in your network (the
+left side of the U-Net). The \texttt{(height,\ width,\ length)} of the
+input gets smaller as you move down this path, and the number of
+channels increases.
+
+\hypertarget{depth-0}{%
+\subsubsection{Depth 0}\label{depth-0}}
+
+By ``depth 0'' here, we're referring to the depth of the first
+down-convolution in the U-net.
+
+The number of filters is specified for each depth and for each layer
+within that depth.
+
+The formula to use for calculating the number of filters is:
+\[filters_{i} = 32 \times (2^{i})\]
+
+Where \(i\) is the current depth.
+
+So at depth \(i=0\): \[filters_{0} = 32 \times (2^{0}) = 32\]
+
+\hypertarget{layer-0}{%
+\subsubsection{Layer 0}\label{layer-0}}
+
+There are two convolutional layers for each depth
+
+    Run the next cell to create the first 3D convolution
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{} Define a Conv3D tensor with 32 filters}
+        \PY{n}{down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}0} \PY{o}{=} \PY{n}{Conv3D}\PY{p}{(}\PY{n}{filters}\PY{o}{=}\PY{l+m+mi}{32}\PY{p}{,} 
+                                      \PY{n}{kernel\PYZus{}size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,}
+                                      \PY{n}{padding}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{same}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                                      \PY{n}{strides}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+                                      \PY{p}{)}\PY{p}{(}\PY{n}{input\PYZus{}layer}\PY{p}{)}
+        \PY{n}{down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}0}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+WARNING:tensorflow:From /opt/conda/lib/python3.6/site-packages/tensorflow\_core/python/ops/resource\_variable\_ops.py:1630: calling BaseResourceVariable.\_\_init\_\_ (from tensorflow.python.ops.resource\_variable\_ops) with constraint is deprecated and will be removed in a future version.
+Instructions for updating:
+If using Keras pass *\_constraint arguments to layers.
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:} <tf.Tensor 'conv3d\_1/add:0' shape=(?, 32, 160, 160, 16) dtype=float32>
+\end{Verbatim}
+            
+    Notice that with 32 filters, the result you get above is a tensor with
+32 channels.
+
+Run the next cell to add a relu activation to the first convolutional
+layer
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{} Add a relu activation to layer 0 of depth 0}
+        \PY{n}{down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}0} \PY{o}{=} \PY{n}{Activation}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{(}\PY{n}{down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}0}\PY{p}{)}
+        \PY{n}{down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}0}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:} <tf.Tensor 'activation\_1/Relu:0' shape=(?, 32, 160, 160, 16) dtype=float32>
+\end{Verbatim}
+            
+    \hypertarget{depth-0-layer-1}{%
+\subsubsection{Depth 0, Layer 1}\label{depth-0-layer-1}}
+
+For layer 1 of depth 0, the formula for calculating the number of
+filters is: \[filters_{i} = 32 \times (2^{i}) \times 2\]
+
+Where \(i\) is the current depth. - Notice that the `\(\times~2\)' at
+the end of this expression isn't there for layer 0.
+
+So at depth \(i=0\) for layer 1:
+\[filters_{0} = 32 \times (2^{0}) \times 2 = 64\]
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{\PYZsh{} Create a Conv3D layer with 64 filters and add relu activation}
+        \PY{n}{down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}1} \PY{o}{=} \PY{n}{Conv3D}\PY{p}{(}\PY{n}{filters}\PY{o}{=}\PY{l+m+mi}{64}\PY{p}{,} 
+                        \PY{n}{kernel\PYZus{}size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,}
+                        \PY{n}{padding}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{same}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                        \PY{n}{strides}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+                       \PY{p}{)}\PY{p}{(}\PY{n}{down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}0}\PY{p}{)}
+        \PY{n}{down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}1} \PY{o}{=} \PY{n}{Activation}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{(}\PY{n}{down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}1}\PY{p}{)}
+        \PY{n}{down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}1}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:} <tf.Tensor 'activation\_2/Relu:0' shape=(?, 64, 160, 160, 16) dtype=float32>
+\end{Verbatim}
+            
+    \hypertarget{max-pooling}{%
+\subsubsection{Max pooling}\label{max-pooling}}
+
+Within the U-Net architecture, there is a max pooling operation after
+each of the down-convolutions (not including the last down-convolution
+at the bottom of the U). In general, this means you'll add max pooling
+after each down-convolution up to (but not including) the
+\texttt{depth\ -\ 1} down-convolution (since you started counting at 0).
+
+For this lab exercise: - The overall depth of the U-Net you're
+constructing is 2 - So the bottom of your U is at a depth index of:
+\(2-1 = 1\). - So far you've only defined the \(depth=0\)
+down-convolutions, so the next thing to do is add max pooling
+
+    Run the next cell to add a max pooling operation to your U-Net
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+c1}{\PYZsh{} Define a max pooling layer}
+        \PY{n}{down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}pool} \PY{o}{=} \PY{n}{MaxPooling3D}\PY{p}{(}\PY{n}{pool\PYZus{}size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}\PY{p}{(}\PY{n}{down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}1}\PY{p}{)}
+        \PY{n}{down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}pool}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:} <tf.Tensor 'max\_pooling3d\_1/transpose\_1:0' shape=(?, 64, 80, 80, 8) dtype=float32>
+\end{Verbatim}
+            
+    \hypertarget{depth-1-layer-0}{%
+\subsubsection{Depth 1, Layer 0}\label{depth-1-layer-0}}
+
+At depth 1, layer 0, the formula for calculating the number of filters
+is: \[filters_{i} = 32 \times (2^{i})\]
+
+Where \(i\) is the current depth.
+
+So at depth \(i=1\): \[filters_{1} = 32 \times (2^{1}) = 64\]
+
+Run the next cell to add a Conv3D layer to your network with relu
+activation
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{\PYZsh{} Add a Conv3D layer to your network with relu activation}
+        \PY{n}{down\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}0} \PY{o}{=} \PY{n}{Conv3D}\PY{p}{(}\PY{n}{filters}\PY{o}{=}\PY{l+m+mi}{64}\PY{p}{,} 
+                        \PY{n}{kernel\PYZus{}size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,}
+                        \PY{n}{padding}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{same}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                        \PY{n}{strides}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+                       \PY{p}{)}\PY{p}{(}\PY{n}{down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}pool}\PY{p}{)}
+        \PY{n}{down\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}0} \PY{o}{=} \PY{n}{Activation}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{(}\PY{n}{down\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}0}\PY{p}{)}
+        \PY{n}{down\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}0}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}7}]:} <tf.Tensor 'activation\_3/Relu:0' shape=(?, 64, 80, 80, 8) dtype=float32>
+\end{Verbatim}
+            
+    \hypertarget{depth-1-layer-1}{%
+\subsubsection{Depth 1, Layer 1}\label{depth-1-layer-1}}
+
+For layer 1 of depth 1 the formula you'll use for number of filters is:
+\[filters_{i} = 32 \times (2^{i}) \times 2\]
+
+Where \(i\) is the current depth. - Notice that the `\(\times 2\)' at
+the end of this expression isn't there for layer 0.
+
+So at depth \(i=1\): \[filters_{0} = 32 \times (2^{1}) \times 2 = 128\]
+
+Run the next cell to add another Conv3D with 128 filters to your
+network.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{c+c1}{\PYZsh{} Add another Conv3D with 128 filters to your network.}
+        \PY{n}{down\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}1} \PY{o}{=} \PY{n}{Conv3D}\PY{p}{(}\PY{n}{filters}\PY{o}{=}\PY{l+m+mi}{128}\PY{p}{,} 
+                        \PY{n}{kernel\PYZus{}size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,}
+                        \PY{n}{padding}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{same}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                        \PY{n}{strides}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+                       \PY{p}{)}\PY{p}{(}\PY{n}{down\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}0}\PY{p}{)}
+        \PY{n}{down\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}1} \PY{o}{=} \PY{n}{Activation}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{(}\PY{n}{down\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}1}\PY{p}{)}
+        \PY{n}{down\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}1}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}8}]:} <tf.Tensor 'activation\_4/Relu:0' shape=(?, 128, 80, 80, 8) dtype=float32>
+\end{Verbatim}
+            
+    \hypertarget{no-max-pooling-at-depth-1-the-bottom-of-the-u}{%
+\subsubsection{No max pooling at depth 1 (the bottom of the
+U)}\label{no-max-pooling-at-depth-1-the-bottom-of-the-u}}
+
+When you get to the ``bottom'' of the U-net, you don't need to apply max
+pooling after the convolutions.
+
+    \hypertarget{expanding-upward-path}{%
+\subsection{Expanding (upward) Path}\label{expanding-upward-path}}
+
+Now you'll work on the expanding path of the U-Net, (going up on the
+right side, when viewing the diagram). The image's (height, width,
+length) all get larger in the expanding path.
+
+\hypertarget{depth-0-up-sampling-layer-0}{%
+\subsubsection{Depth 0, Up sampling layer
+0}\label{depth-0-up-sampling-layer-0}}
+
+You'll use a pool size of (2,2,2) for upsampling. - This is the default
+value for
+\href{https://www.tensorflow.org/api_docs/python/tf/keras/layers/UpSampling3D}{tf.keras.layers.UpSampling3D}
+- As input to the upsampling at depth 1, you'll use the last layer of
+the downsampling. In this case, it's the depth 1 layer 1.
+
+Run the next cell to add an upsampling operation to your network. Note
+that you're not adding any activation to this upsampling layer.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{c+c1}{\PYZsh{} Add an upsampling operation to your network}
+        \PY{n}{up\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}0} \PY{o}{=} \PY{n}{UpSampling3D}\PY{p}{(}\PY{n}{size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}\PY{p}{(}\PY{n}{down\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}1}\PY{p}{)}
+        \PY{n}{up\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}0}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}9}]:} <tf.Tensor 'up\_sampling3d\_1/concat\_2:0' shape=(?, 128, 160, 160, 16) dtype=float32>
+\end{Verbatim}
+            
+    \hypertarget{concatenate-upsampled-depth-0-with-downsampled-depth-0}{%
+\subsubsection{Concatenate upsampled depth 0 with downsampled depth
+0}\label{concatenate-upsampled-depth-0-with-downsampled-depth-0}}
+
+Now you'll apply a concatenation operation using the layers that are
+both at the same depth of 0. - up\_depth\_0\_layer\_0: shape is (?, 128,
+160, 160, 16) - depth\_0\_layer\_1: shape is (?, 64, 160, 160, 16)
+
+\begin{itemize}
+\tightlist
+\item
+  Double check that both of these layers have the same height, width and
+  length.
+\item
+  If they're the same, then they can be concatenated along axis 1 (the
+  channel axis).
+\item
+  The (height, width, length) is (160, 160, 16) for both.
+\end{itemize}
+
+Run the next cell to check that the layers you wish to concatenate have
+the same height, width and length.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{c+c1}{\PYZsh{} Print the shape of layers to concatenate}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{up\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}0}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}1}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Tensor("up\_sampling3d\_1/concat\_2:0", shape=(?, 128, 160, 160, 16), dtype=float32)
+
+Tensor("activation\_2/Relu:0", shape=(?, 64, 160, 160, 16), dtype=float32)
+
+    \end{Verbatim}
+
+    Run the next cell to add a concatenation operation to your network
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{c+c1}{\PYZsh{} Add a concatenation along axis 1}
+         \PY{n}{up\PYZus{}depth\PYZus{}1\PYZus{}concat} \PY{o}{=} \PY{n}{concatenate}\PY{p}{(}\PY{p}{[}\PY{n}{up\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}0}\PY{p}{,}
+                                          \PY{n}{down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}1}\PY{p}{]}\PY{p}{,}
+                                         \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{up\PYZus{}depth\PYZus{}1\PYZus{}concat}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} <tf.Tensor 'concatenate\_1/concat:0' shape=(?, 192, 160, 160, 16) dtype=float32>
+\end{Verbatim}
+            
+    Notice that the upsampling layer had 128 channels, and the
+down-convolution layer had 64 channels so that when concatenated, the
+result has 128 + 64 = 192 channels.
+
+    \hypertarget{up-convolution-layer-1}{%
+\subsubsection{Up-convolution layer 1}\label{up-convolution-layer-1}}
+
+The number of filters for this layer will be set to the number of
+channels in the down-convolution's layer 1 at the same depth of 0
+(down\_depth\_0\_layer\_1).
+
+Run the next cell to have a look at the shape of the down-convolution
+depth 0 layer 1
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}1}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:} <tf.Tensor 'activation\_2/Relu:0' shape=(?, 64, 160, 160, 16) dtype=float32>
+\end{Verbatim}
+            
+    Notice the number of channels for \texttt{depth\_0\_layer\_1} is 64
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{number of filters: }\PY{l+s+si}{\PYZob{}down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}1.\PYZus{}keras\PYZus{}shape[1]\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+number of filters: 64
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{c+c1}{\PYZsh{} Add a Conv3D up\PYZhy{}convolution with 64 filters to your network}
+         \PY{n}{up\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}1} \PY{o}{=} \PY{n}{Conv3D}\PY{p}{(}\PY{n}{filters}\PY{o}{=}\PY{l+m+mi}{64}\PY{p}{,} 
+                                     \PY{n}{kernel\PYZus{}size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,}
+                                     \PY{n}{padding}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{same}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                                     \PY{n}{strides}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+                                    \PY{p}{)}\PY{p}{(}\PY{n}{up\PYZus{}depth\PYZus{}1\PYZus{}concat}\PY{p}{)}
+         \PY{n}{up\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}1} \PY{o}{=} \PY{n}{Activation}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{(}\PY{n}{up\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}1}\PY{p}{)}
+         \PY{n}{up\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}1}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:} <tf.Tensor 'activation\_5/Relu:0' shape=(?, 64, 160, 160, 16) dtype=float32>
+\end{Verbatim}
+            
+    \hypertarget{up-convolution-depth-0-layer-2}{%
+\subsubsection{Up-convolution depth 0, layer
+2}\label{up-convolution-depth-0-layer-2}}
+
+At layer 2 of depth 0 in the up-convolution the next step will be to add
+another up-convolution. The number of filters you'll want to use for
+this next up-convolution will need to be equal to the number of filters
+in the down-convolution depth 0 layer 1.
+
+Run the next cell to remind yourself of the number of filters in
+down-convolution depth 0 layer 1.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}1}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{number of filters: }\PY{l+s+si}{\PYZob{}down\PYZus{}depth\PYZus{}0\PYZus{}layer\PYZus{}1.\PYZus{}keras\PYZus{}shape[1]\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Tensor("activation\_2/Relu:0", shape=(?, 64, 160, 160, 16), dtype=float32)
+number of filters: 64
+
+    \end{Verbatim}
+
+    As you can see, the number of channels / filters in
+\texttt{down\_depth\_0\_layer\_1} is 64.
+
+    Run the next cell to add a Conv3D up-convolution with 64 filters to your
+network.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{c+c1}{\PYZsh{} Add a Conv3D up\PYZhy{}convolution with 64 filters to your network}
+         \PY{n}{up\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}2} \PY{o}{=} \PY{n}{Conv3D}\PY{p}{(}\PY{n}{filters}\PY{o}{=}\PY{l+m+mi}{64}\PY{p}{,} 
+                                     \PY{n}{kernel\PYZus{}size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,}
+                                     \PY{n}{padding}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{same}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                                     \PY{n}{strides}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+                                    \PY{p}{)}\PY{p}{(}\PY{n}{up\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}1}\PY{p}{)}
+         \PY{n}{up\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}2} \PY{o}{=} \PY{n}{Activation}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{(}\PY{n}{up\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}2}\PY{p}{)}
+         \PY{n}{up\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}2}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}16}]:} <tf.Tensor 'activation\_6/Relu:0' shape=(?, 64, 160, 160, 16) dtype=float32>
+\end{Verbatim}
+            
+    \hypertarget{final-convolution}{%
+\subsubsection{Final Convolution}\label{final-convolution}}
+
+For the final convolution, you will set the number of filters to be
+equal to the number of classes in your input data.
+
+In the assignment, you will be using data with 3 classes, namely:
+
+\begin{itemize}
+\tightlist
+\item
+  1: edema
+\item
+  2: non-enhancing tumor
+\item
+  3: enhancing tumor
+\end{itemize}
+
+Run the next cell to add a final Conv3D with 3 filters to your network.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{c+c1}{\PYZsh{} Add a final Conv3D with 3 filters to your network.}
+         \PY{n}{final\PYZus{}conv} \PY{o}{=} \PY{n}{Conv3D}\PY{p}{(}\PY{n}{filters}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{c+c1}{\PYZsh{}3 categories }
+                             \PY{n}{kernel\PYZus{}size}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}
+                             \PY{n}{padding}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{valid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                             \PY{n}{strides}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+                             \PY{p}{)}\PY{p}{(}\PY{n}{up\PYZus{}depth\PYZus{}1\PYZus{}layer\PYZus{}2}\PY{p}{)}
+         \PY{n}{final\PYZus{}conv}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}17}]:} <tf.Tensor 'conv3d\_7/add:0' shape=(?, 3, 160, 160, 16) dtype=float32>
+\end{Verbatim}
+            
+    \hypertarget{activation-for-final-convolution}{%
+\subsubsection{Activation for final
+convolution}\label{activation-for-final-convolution}}
+
+Run the next cell to add a sigmoid activation to your final convolution.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{c+c1}{\PYZsh{} Add a sigmoid activation to your final convolution.}
+         \PY{n}{final\PYZus{}activation} \PY{o}{=} \PY{n}{Activation}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigmoid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{(}\PY{n}{final\PYZus{}conv}\PY{p}{)}
+         \PY{n}{final\PYZus{}activation}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}18}]:} <tf.Tensor 'activation\_7/Sigmoid:0' shape=(?, 3, 160, 160, 16) dtype=float32>
+\end{Verbatim}
+            
+    \hypertarget{create-and-compile-the-model}{%
+\subsubsection{Create and compile the
+model}\label{create-and-compile-the-model}}
+
+In this example, you will be setting the loss and metrics to options
+that are pre-built in Keras. However, in the assignment, you will
+implement better loss functions and metrics for evaluating the model's
+performance.
+
+Run the next cell to define and compile your model based on the
+architecture you created above.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{c+c1}{\PYZsh{} Define and compile your model}
+         \PY{n}{model} \PY{o}{=} \PY{n}{Model}\PY{p}{(}\PY{n}{inputs}\PY{o}{=}\PY{n}{input\PYZus{}layer}\PY{p}{,} \PY{n}{outputs}\PY{o}{=}\PY{n}{final\PYZus{}activation}\PY{p}{)}
+         \PY{n}{model}\PY{o}{.}\PY{n}{compile}\PY{p}{(}\PY{n}{optimizer}\PY{o}{=}\PY{n}{Adam}\PY{p}{(}\PY{n}{lr}\PY{o}{=}\PY{l+m+mf}{0.00001}\PY{p}{)}\PY{p}{,}
+                       \PY{n}{loss}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categorical\PYZus{}crossentropy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                       \PY{n}{metrics}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categorical\PYZus{}accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                      \PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{c+c1}{\PYZsh{} Print out a summary of the model you created}
+         \PY{n}{model}\PY{o}{.}\PY{n}{summary}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Model: "model\_1"
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+Layer (type)                    Output Shape         Param \#     Connected to                     
+==================================================================================================
+input\_1 (InputLayer)            (None, 4, 160, 160,  0                                            
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv3d\_1 (Conv3D)               (None, 32, 160, 160, 3488        input\_1[0][0]                    
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+activation\_1 (Activation)       (None, 32, 160, 160, 0           conv3d\_1[0][0]                   
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv3d\_2 (Conv3D)               (None, 64, 160, 160, 55360       activation\_1[0][0]               
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+activation\_2 (Activation)       (None, 64, 160, 160, 0           conv3d\_2[0][0]                   
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+max\_pooling3d\_1 (MaxPooling3D)  (None, 64, 80, 80, 8 0           activation\_2[0][0]               
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv3d\_3 (Conv3D)               (None, 64, 80, 80, 8 110656      max\_pooling3d\_1[0][0]            
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+activation\_3 (Activation)       (None, 64, 80, 80, 8 0           conv3d\_3[0][0]                   
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv3d\_4 (Conv3D)               (None, 128, 80, 80,  221312      activation\_3[0][0]               
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+activation\_4 (Activation)       (None, 128, 80, 80,  0           conv3d\_4[0][0]                   
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+up\_sampling3d\_1 (UpSampling3D)  (None, 128, 160, 160 0           activation\_4[0][0]               
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+concatenate\_1 (Concatenate)     (None, 192, 160, 160 0           up\_sampling3d\_1[0][0]            
+                                                                 activation\_2[0][0]               
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv3d\_5 (Conv3D)               (None, 64, 160, 160, 331840      concatenate\_1[0][0]              
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+activation\_5 (Activation)       (None, 64, 160, 160, 0           conv3d\_5[0][0]                   
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv3d\_6 (Conv3D)               (None, 64, 160, 160, 110656      activation\_5[0][0]               
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+activation\_6 (Activation)       (None, 64, 160, 160, 0           conv3d\_6[0][0]                   
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv3d\_7 (Conv3D)               (None, 3, 160, 160,  195         activation\_6[0][0]               
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+activation\_7 (Activation)       (None, 3, 160, 160,  0           conv3d\_7[0][0]                   
+==================================================================================================
+Total params: 833,507
+Trainable params: 833,507
+Non-trainable params: 0
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+    \end{Verbatim}
+
+    \hypertarget{congratulations-youve-created-your-very-own-u-net-model-architecture}{%
+\subsubsection{Congratulations! You've created your very own U-Net model
+architecture!}\label{congratulations-youve-created-your-very-own-u-net-model-architecture}}
+
+Next, you'll check that you did everything correctly by comparing your
+model summary to the example model defined below.
+
+\hypertarget{double-check-your-model}{%
+\subsubsection{Double check your model}\label{double-check-your-model}}
+
+To double check that you created the correct model, use a function that
+we've provided to create the same model, and check that the layers and
+the layer dimensions match!
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{c+c1}{\PYZsh{} Import predefined utilities}
+         \PY{k+kn}{import} \PY{n+nn}{util}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{c+c1}{\PYZsh{} Create a model using a predefined function}
+         \PY{n}{model\PYZus{}2} \PY{o}{=} \PY{n}{util}\PY{o}{.}\PY{n}{unet\PYZus{}model\PYZus{}3d}\PY{p}{(}\PY{n}{depth}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,}
+                                         \PY{n}{loss\PYZus{}function}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categorical\PYZus{}crossentropy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                                         \PY{n}{metrics}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categorical\PYZus{}accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{c+c1}{\PYZsh{} Print out a summary of the model created by the predefined function}
+         \PY{n}{model\PYZus{}2}\PY{o}{.}\PY{n}{summary}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Model: "model\_2"
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+Layer (type)                    Output Shape         Param \#     Connected to                     
+==================================================================================================
+input\_2 (InputLayer)            (None, 4, 160, 160,  0                                            
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv3d\_8 (Conv3D)               (None, 32, 160, 160, 3488        input\_2[0][0]                    
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+activation\_8 (Activation)       (None, 32, 160, 160, 0           conv3d\_8[0][0]                   
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv3d\_9 (Conv3D)               (None, 64, 160, 160, 55360       activation\_8[0][0]               
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+activation\_9 (Activation)       (None, 64, 160, 160, 0           conv3d\_9[0][0]                   
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+max\_pooling3d\_2 (MaxPooling3D)  (None, 64, 80, 80, 8 0           activation\_9[0][0]               
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv3d\_10 (Conv3D)              (None, 64, 80, 80, 8 110656      max\_pooling3d\_2[0][0]            
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+activation\_10 (Activation)      (None, 64, 80, 80, 8 0           conv3d\_10[0][0]                  
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv3d\_11 (Conv3D)              (None, 128, 80, 80,  221312      activation\_10[0][0]              
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+activation\_11 (Activation)      (None, 128, 80, 80,  0           conv3d\_11[0][0]                  
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+up\_sampling3d\_2 (UpSampling3D)  (None, 128, 160, 160 0           activation\_11[0][0]              
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+concatenate\_2 (Concatenate)     (None, 192, 160, 160 0           up\_sampling3d\_2[0][0]            
+                                                                 activation\_9[0][0]               
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv3d\_12 (Conv3D)              (None, 64, 160, 160, 331840      concatenate\_2[0][0]              
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+activation\_12 (Activation)      (None, 64, 160, 160, 0           conv3d\_12[0][0]                  
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv3d\_13 (Conv3D)              (None, 64, 160, 160, 110656      activation\_12[0][0]              
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+activation\_13 (Activation)      (None, 64, 160, 160, 0           conv3d\_13[0][0]                  
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv3d\_14 (Conv3D)              (None, 3, 160, 160,  195         activation\_13[0][0]              
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+activation\_14 (Activation)      (None, 3, 160, 160,  0           conv3d\_14[0][0]                  
+==================================================================================================
+Total params: 833,507
+Trainable params: 833,507
+Non-trainable params: 0
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+    \end{Verbatim}
+
+    \hypertarget{look-at-the-model-summary-for-the-u-net-you-created-and-compare-it-to-the-summary-for-the-example-model-created-by-the-predefined-function-you-imported-above.}{%
+\paragraph{Look at the model summary for the U-Net you created and
+compare it to the summary for the example model created by the
+predefined function you imported
+above.}\label{look-at-the-model-summary-for-the-u-net-you-created-and-compare-it-to-the-summary-for-the-example-model-created-by-the-predefined-function-you-imported-above.}}
+
+    \hypertarget{thats-it-for-this-exercise-we-hope-this-have-provided-you-with-more-insight-into-the-network-architecture-youll-be-working-with-in-this-weeks-assignment}{%
+\paragraph{That's it for this exercise, we hope this have provided you
+with more insight into the network architecture you'll be working with
+in this week's
+assignment!}\label{thats-it-for-this-exercise-we-hope-this-have-provided-you-with-more-insight-into-the-network-architecture-youll-be-working-with-in-this-weeks-assignment}}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
